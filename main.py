@@ -23,4 +23,4 @@ while True:
         print("Thank you for using JustToDO.")
         break
     else:
-        print("Error, Invalid input, please try again.")
+        print("Error, Invalid input, please try again")
