@@ -47,6 +47,7 @@ def check_tasks(tasks):
                 print("Invalid task number.")
         except ValueError:
             print('Please enter a valid number.')
+
 # ===============================================================
 
 print("*********************")
@@ -55,13 +56,13 @@ print("*********************")
 tasks = load_tasks()
 while True:
     print("""
-===============
-1- Add Tasks
-2- View Tasks
-3- Delete Tasks
-4- Check Tasks
-5- Exit
-===============
+|===============|
+|1- Add Tasks   |
+|2- View Tasks  |
+|3- Delete Tasks|
+|4- Check Tasks |
+|5- Exit        |
+|===============|
     """)
     choice = input("Choose: ")
     if choice == '1':
