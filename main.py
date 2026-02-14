@@ -16,8 +16,12 @@ def delete_tasks(tasks):
         for i, task in enumerate(tasks, start=1):
             checkbox = "[✓]" if task["done"] else "[ ]"
             print(f"{i}- {checkbox} {task['title']}")
+            if task.get('notes'):
+                print(f"    Notes: {task['notes']}")
         try:
-            num = int(input("Enter task number to delete: "))
+            num = int(input("Enter task number to delete (0 to cancel): "))
+            if num == 0:
+                return
             index = num - 1
             if 0 <= index < len(tasks):
                 removed = tasks.pop(index)
@@ -35,8 +39,12 @@ def check_tasks(tasks):
         for i, task in enumerate(tasks, start=1):
             checkbox = "[✓]" if task["done"] else "[ ]"
             print(f"{i}- {checkbox} {task['title']}")
+            if task.get('notes'):
+                print(f"    Notes: {task['notes']}")
         try:
-            num = int(input("Enter the number to check/uncheck: "))
+            num = int(input("Enter the number to check/uncheck (0 to cancel): "))
+            if num == 0:
+                return
             index = num - 1
             if 0 <= index < len(tasks):
                 tasks[index]["done"] = not tasks[index]["done"]
@@ -67,7 +75,8 @@ while True:
     choice = input("Choose: ")
     if choice == '1':
         task = input("Enter Task: ")
-        tasks.append({'title': task, 'done': False})
+        note = input("Enter Note (Optional, press enter to skip): ")
+        tasks.append({'title': task, 'done': False, 'notes': note})
         save_tasks(tasks)
     elif choice == '2':
         if not tasks:
@@ -77,6 +86,8 @@ while True:
             for i, task in enumerate(tasks, start=1):
                 checkbox = "[✓]" if task["done"] else "[ ]"
                 print(f"{i}- {checkbox} {task['title']}")
+                if task.get('notes'):
+                    print(f"    Notes: {task['notes']}")
     elif choice == '3':
         delete_tasks(tasks)
     elif choice == '4':
