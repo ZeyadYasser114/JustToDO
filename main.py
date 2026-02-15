@@ -1,13 +1,59 @@
 import json
+
+def edit_tasks(tasks):
+    if not tasks:
+        print("No tasks to edit.")
+    else:
+        print("Your tasks:")
+        for i, task in enumerate(tasks, start=1):
+            checkbox = "[✓]" if task["done"] else "[ ]"
+            print(f"{i}- {checkbox} {task['title']}")
+            if task.get('notes'):
+                print(f"    Notes: {task['notes']}")
+        try:
+            num = int(input("Enter task number to edit (0 to cancel): "))
+            if num == 0:
+                return
+            index = num - 1
+            if 0 <= index < len(tasks):
+                print(f"\nEditing: {tasks[index]['title']}")
+                print("What would you like to edit?")
+                print("1- Title")
+                print("2- Notes")
+                print("3- Both")
+                edit_choice = input("Choose: ")
+                if edit_choice == '1':
+                    new_title = input("Enter a new title: ")
+                    tasks[index]['title'] = new_title
+                    print(f"Title updated to {new_title}.")
+                elif edit_choice == '2':
+                    new_notes = input("Enter new notes: ")
+                    tasks[index]['notes'] = new_notes
+                    print(f"Notes updated to {new_notes}")
+                elif edit_choice == '3':
+                    new_title = input("Enter a new title: ")
+                    new_notes = input("Enter new notes: ")
+                    tasks[index]['title'] = new_title
+                    tasks[index]['notes'] = new_notes
+                    print("Task updated.")
+                else:
+                    print("Invalid Choice")
+                    return
+                save_tasks(tasks)
+        except ValueError:
+            print('Please enter a valid number.')
+
 def load_tasks():
     try:
         with open('tasks.json', 'r') as file:
             return json.load(file)
     except FileNotFoundError:
         return []
+
 def save_tasks(tasks):
     with open('tasks.json', 'w') as file:
         json.dump(tasks, file)
+
 def delete_tasks(tasks):
     if not tasks:
         print("No tasks to delete.")
@@ -31,6 +77,7 @@ def delete_tasks(tasks):
                 print("Invalid task number.")
         except ValueError:
             print('Please enter a valid number.')
+
 def check_tasks(tasks):
     if not tasks:
         print("No tasks to check.")
@@ -67,9 +114,10 @@ while True:
 |===============|
 |1- Add Tasks   |
 |2- View Tasks  |
-|3- Delete Tasks|
-|4- Check Tasks |
-|5- Exit        |
+|3- Edit Tasks  |
+|4- Delete Tasks|
+|5- Check Tasks |
+|6- Exit        |
 |===============|
     """)
     choice = input("Choose: ")
@@ -89,10 +137,12 @@ while True:
                 if task.get('notes'):
                     print(f"    Notes: {task['notes']}")
     elif choice == '3':
-        delete_tasks(tasks)
+        edit_tasks(tasks)
     elif choice == '4':
-        check_tasks(tasks)
+        delete_tasks(tasks)
     elif choice == '5':
+        check_tasks(tasks)
+    elif choice == '6':
         print("Thank you for using JustToDO.")
         break
     else:
