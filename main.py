@@ -1,15 +1,17 @@
 import json
 
+def show_tasks(tasks):
+    for i, task in enumerate(tasks, start=1):
+        checkbox = "[✓]" if task["done"] else "[ ]"
+        print(f"{i}- {checkbox} {task['title']}")
+        if task.get('notes'):
+            print(f"    Notes: {task['notes']}")
 def edit_tasks(tasks):
     if not tasks:
         print("No tasks to edit.")
     else:
         print("Your tasks:")
-        for i, task in enumerate(tasks, start=1):
-            checkbox = "[✓]" if task["done"] else "[ ]"
-            print(f"{i}- {checkbox} {task['title']}")
-            if task.get('notes'):
-                print(f"    Notes: {task['notes']}")
+        show_tasks(tasks)
         try:
             num = int(input("Enter task number to edit (0 to cancel): "))
             if num == 0:
@@ -42,7 +44,6 @@ def edit_tasks(tasks):
                 save_tasks(tasks)
         except ValueError:
             print('Please enter a valid number.')
-
 def load_tasks():
     try:
         with open('tasks.json', 'r') as file:
@@ -59,11 +60,7 @@ def delete_tasks(tasks):
         print("No tasks to delete.")
     else:
         print("Your tasks:")
-        for i, task in enumerate(tasks, start=1):
-            checkbox = "[✓]" if task["done"] else "[ ]"
-            print(f"{i}- {checkbox} {task['title']}")
-            if task.get('notes'):
-                print(f"    Notes: {task['notes']}")
+        show_tasks(tasks)
         try:
             num = int(input("Enter task number to delete (0 to cancel): "))
             if num == 0:
@@ -83,11 +80,7 @@ def check_tasks(tasks):
         print("No tasks to check.")
     else:
         print("Your tasks:")
-        for i, task in enumerate(tasks, start=1):
-            checkbox = "[✓]" if task["done"] else "[ ]"
-            print(f"{i}- {checkbox} {task['title']}")
-            if task.get('notes'):
-                print(f"    Notes: {task['notes']}")
+        show_tasks(tasks)
         try:
             num = int(input("Enter the number to check/uncheck (0 to cancel): "))
             if num == 0:
@@ -122,7 +115,9 @@ while True:
     """)
     choice = input("Choose: ")
     if choice == '1':
-        task = input("Enter Task: ")
+        task = input("Enter Task (0 to cancel): ")
+        if task == '0':
+            continue
         note = input("Enter Note (Optional, press enter to skip): ")
         tasks.append({'title': task, 'done': False, 'notes': note})
         save_tasks(tasks)
@@ -131,11 +126,7 @@ while True:
             print("No tasks yet.")
         else:
             print("Your tasks: ")
-            for i, task in enumerate(tasks, start=1):
-                checkbox = "[✓]" if task["done"] else "[ ]"
-                print(f"{i}- {checkbox} {task['title']}")
-                if task.get('notes'):
-                    print(f"    Notes: {task['notes']}")
+            show_tasks(tasks)
     elif choice == '3':
         edit_tasks(tasks)
     elif choice == '4':
