@@ -1,9 +1,11 @@
 import json
+from datetime import datetime
 
 def show_tasks(tasks):
     for i, task in enumerate(tasks, start=1):
         checkbox = "[✓]" if task["done"] else "[ ]"
-        print(f"{i}- {checkbox} {task['title']}")
+        created = task.get("created_at", 'N/A')
+        print(f"{i}- {checkbox} {task['title']}  [{created}]")
         if task.get('notes'):
             print(f"    Notes: {task['notes']}")
 def edit_tasks(tasks):
@@ -70,7 +72,7 @@ def delete_tasks(tasks):
                 removed = tasks.pop(index)
                 save_tasks(tasks)
                 print(f"Deleted: {removed['title']}")
-            else:
+            else: 
                 print("Invalid task number.")
         except ValueError:
             print('Please enter a valid number.')
@@ -97,7 +99,6 @@ def check_tasks(tasks):
             print('Please enter a valid number.')
 
 # ===============================================================
-
 print("*********************")
 print("Welcome To JustToDO")
 print("*********************")
@@ -119,7 +120,10 @@ while True:
         if task == '0':
             continue
         note = input("Enter Note (Optional, press enter to skip): ")
-        tasks.append({'title': task, 'done': False, 'notes': note})
+        tasks.append({'title': task,
+                      'done': False,
+                      'notes': note,
+                      'created_at': datetime.now().strftime("%m / %d/ %Y  %H:%M:%S")})
         save_tasks(tasks)
     elif choice == '2':
         if not tasks:

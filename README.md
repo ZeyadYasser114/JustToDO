@@ -1,1 +1,1 @@
-This is the progree of a todo list app until it is completed
+This is the progress of a todo list app until it is completed
