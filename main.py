@@ -5,6 +5,7 @@ from functions import delete_tasks
 from functions import edit_tasks
 from functions import check_tasks
 from functions import show_tasks
+from colorama import init, Fore, Style
 # ===============================================================
 print("*********************")
 print("Welcome To JustToDO")
@@ -45,7 +46,7 @@ while True:
     elif choice == '5':
         check_tasks(tasks)
     elif choice == '6':
-        print("Thank you for using JustToDO.")
+        print(Fore.YELLOW + "Thank you for using JustToDO.")
         break
     else:
-        print("Error, Invalid input, please try again.")
+        print(Fore.RED + "Error, Invalid input, please try again." + Fore.RESET)

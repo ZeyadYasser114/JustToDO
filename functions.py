@@ -1,5 +1,8 @@
 import json
 from datetime import datetime
+def save_tasks(tasks):
+    with open('tasks.json', 'w') as file:
+        json.dump(tasks, file)
 def show_tasks(tasks):
     for i, task in enumerate(tasks, start=1):
         checkbox = "[✓]" if task["done"] else "[ ]"
@@ -45,17 +48,6 @@ def edit_tasks(tasks):
                 save_tasks(tasks)
         except ValueError:
             print('Please enter a valid number.')
-def load_tasks():
-    try:
-        with open('tasks.json', 'r') as file:
-            return json.load(file)
-    except FileNotFoundError:
-        return []
-
-def save_tasks(tasks):
-    with open('tasks.json', 'w') as file:
-        json.dump(tasks, file)
-
 def delete_tasks(tasks):
     if not tasks:
         print("No tasks to delete.")
@@ -96,3 +88,9 @@ def check_tasks(tasks):
                 print("Invalid task number.")
         except ValueError:
             print('Please enter a valid number.')
+def load_tasks():
+    try:
+        with open('tasks.json', 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
