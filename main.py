@@ -1,4 +1,4 @@
-from functions import datetime
+from datetime import datetime
 from functions import load_tasks
 from functions import save_tasks
 from functions import delete_tasks
